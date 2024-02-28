@@ -79,10 +79,10 @@ public class BinomialHeapTest {
     ) {
         // Basic checks
         if ((node.rank < 0) != (node.value == null)) {
-            throw new IllegalStateException("Invalid node rank or value");
+            throw new IllegalStateException("Invalid node rank or value.");
         }
         if (isMain != (lowerBound == null)) {
-            throw new IllegalStateException("Invalid arguments");
+            throw new IllegalStateException("Invalid arguments.");
         }
         if (!isMain && node.value.compareTo(lowerBound) < 0) {
             throw new IllegalStateException("Min-heap property violated.");
