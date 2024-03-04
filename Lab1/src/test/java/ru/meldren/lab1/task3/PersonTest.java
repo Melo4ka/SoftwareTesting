@@ -2,11 +2,12 @@ package ru.meldren.lab1.task3;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PersonTest {
@@ -24,19 +25,63 @@ public class PersonTest {
         Location location = new Location(getRandomString(20));
         Person.PhysicalState physicalState = getRandomEnum(Person.PhysicalState.class);
         Person.EmotionalState emotionalState = getRandomEnum(Person.EmotionalState.class);
-        boolean huge = random.nextBoolean();
+        int size = random.nextInt(1, Integer.MAX_VALUE);
         Person person = new Person(
                 name,
                 location,
                 physicalState,
                 emotionalState,
-                huge
+                size
         );
         assertEquals(person.getName(), name);
         assertEquals(person.getLocation(), location);
         assertEquals(person.getPhysicalState(), physicalState);
         assertEquals(person.getEmotionalState(), emotionalState);
-        assertEquals(person.isHuge(), huge);
+        assertEquals(person.getSize(), size);
+    }
+
+    @Test
+    void validEmotionalAndPhysicalStatesAsStringTest() {
+        assertDoesNotThrow(() -> new Person(
+                "Том",
+                new Location("Дом"),
+                "SITTING",
+                "HAPPINESS",
+                1
+        ));
+    }
+
+    @Test
+    void invalidEmotionalStateAsStringTest() {
+        assertThrows(IllegalArgumentException.class, () -> new Person(
+                "Том",
+                new Location("Дом"),
+                "SITTING",
+                "12345",
+                1
+        ));
+    }
+
+    @Test
+    void invalidPhysicalStateAsStringTest() {
+        assertThrows(IllegalArgumentException.class, () -> new Person(
+                "Том",
+                new Location("Дом"),
+                "ABCDE",
+                "HAPPINESS",
+                1
+        ));
+    }
+
+    @RepeatedTest(10)
+    void invalidSizeTest() {
+        assertThrows(IllegalStateException.class, () -> new Person(
+                "Том",
+                new Location("Дом"),
+                "SITTING",
+                "HAPPINESS",
+                random.nextInt(Integer.MIN_VALUE, 1)
+        ));
     }
 
     private static String getRandomString(int length) {

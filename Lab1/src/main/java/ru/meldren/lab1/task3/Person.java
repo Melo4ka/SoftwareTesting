@@ -6,14 +6,24 @@ public class Person {
     private Location location;
     private PhysicalState physicalState;
     private EmotionalState emotionalState;
-    private boolean huge;
+    private int size;
 
-    public Person(String name, Location location, PhysicalState physicalState, EmotionalState emotionalState, boolean huge) {
+    public Person(String name, Location location, PhysicalState physicalState, EmotionalState emotionalState, int size) {
+        checkSize(size);
         this.name = name;
         this.location = location;
         this.physicalState = physicalState;
         this.emotionalState = emotionalState;
-        this.huge = huge;
+        this.size = size;
+    }
+
+    public Person(String name, Location location, String physicalState, String emotionalState, int size) {
+        checkSize(size);
+        this.name = name;
+        this.location = location;
+        this.physicalState = PhysicalState.valueOf(physicalState);
+        this.emotionalState = EmotionalState.valueOf(emotionalState);
+        this.size = size;
     }
 
     public String getName() {
@@ -44,12 +54,19 @@ public class Person {
         this.emotionalState = emotionalState;
     }
 
-    public boolean isHuge() {
-        return huge;
+    public int getSize() {
+        return size;
     }
 
-    public void setHuge(boolean huge) {
-        this.huge = huge;
+    public void setSize(int size) {
+        checkSize(size);
+        this.size = size;
+    }
+
+    private void checkSize(int size) {
+        if (size <= 0) {
+            throw new IllegalStateException("Person size must be greater than zero.");
+        }
     }
 
     public enum PhysicalState {

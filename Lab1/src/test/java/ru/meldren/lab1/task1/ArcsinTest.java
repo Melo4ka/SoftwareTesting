@@ -29,7 +29,9 @@ public class ArcsinTest {
             "-0.5, -0.52359877559",
             "0, 0",
             "1, 1.57079632679",
-            "-1, -1.57079632679"
+            "-1, -1.57079632679",
+            "-0.95, -1.2532359",
+            "0.95, 1.2532359"
     })
     void testArcsinWithinRange(double x, double expected) {
         assertEquals(expected, Arcsin.calculate(x), EPSILON);
