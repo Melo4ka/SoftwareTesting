@@ -4,7 +4,6 @@ import java.util.AbstractQueue;
 import java.util.Iterator;
 import java.util.Objects;
 
-
 public final class BinomialHeap<E extends Comparable<? super E>> extends AbstractQueue<E> {
 
     public final Node<E> head = new Node<>();

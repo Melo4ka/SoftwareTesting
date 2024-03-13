@@ -51,6 +51,6 @@ public class ArcsinTest {
     @RepeatedTest(100)
     void testArcsinRandomValues() {
         double x = random.nextDouble() * 2 - 1;
-        assertEquals(Math.asin(x), Arcsin.calculate(x), EPSILON, () -> "x = " + x);
+        assertEquals(Math.asin(x), Arcsin.calculate(x), EPSILON);
     }
 }
