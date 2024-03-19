@@ -16,7 +16,7 @@ public abstract class AbstractPageTest {
     @BeforeAll
     static void setup() {
         SELENIUM_JUPITER.addBrowsers(
-                //BrowserBuilder.firefox().build()
+                BrowserBuilder.firefox().build(),
                 BrowserBuilder.chrome().build()
         );
     }
