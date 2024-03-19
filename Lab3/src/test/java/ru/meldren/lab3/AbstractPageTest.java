@@ -1,11 +1,12 @@
 package ru.meldren.lab3;
 
+import io.github.bonigarcia.seljup.BrowserBuilder;
 import io.github.bonigarcia.seljup.SeleniumJupiter;
-import io.github.bonigarcia.seljup.SingleSession;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.WebDriver;
+
+import java.time.Duration;
 
 public abstract class AbstractPageTest {
 
@@ -14,8 +15,17 @@ public abstract class AbstractPageTest {
 
     @BeforeAll
     static void setup() {
-        for (Browser browser : Browser.values()) {
-            SELENIUM_JUPITER.addBrowsers(browser.createBrowser());
-        }
+        SELENIUM_JUPITER.addBrowsers(
+                //BrowserBuilder.firefox().build()
+                BrowserBuilder.chrome().build()
+        );
+    }
+
+    protected static void initDriver(String url, WebDriver driver) {
+        driver.get(url);
+        driver.manage().timeouts()
+                .implicitlyWait(Duration.ofSeconds(3))
+                .pageLoadTimeout(Duration.ofSeconds(10))
+                .scriptTimeout(Duration.ofSeconds(10));
     }
 }
