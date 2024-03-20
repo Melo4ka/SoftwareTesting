@@ -44,6 +44,20 @@ public class MainPageTest extends AbstractPageTest {
     }
 
     @TestTemplate
+    void testLogout(WebDriver driver) {
+        AgeConfirmationPage agePage = new AgeConfirmationPage(driver);
+        MainPage mainPage = new MainPage(driver);
+        initDriver(Constant.BASE_URI, driver);
+
+        agePage.confirmIsAdult();
+        mainPage.login(Constant.USERNAME, Constant.PASSWORD);
+        mainPage.logout();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        assertThrows(TimeoutException.class, () -> wait.until(visibilityOf(mainPage.getUsernameContainer())));
+    }
+
+    @TestTemplate
     void testQuickSearch(WebDriver driver) {
         AgeConfirmationPage agePage = new AgeConfirmationPage(driver);
         MainPage mainPage = new MainPage(driver);
